@@ -3,20 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Звіт Завдання №1</title>
+    <title>Shipping and Droid Sales</title>
 </head>
 <body>
-    <h1>Звіт Завдання №1</h1>
-    <h2>Код функції</h2>
-    <pre>
+
+<script>
 function getShippingMessage(country, price, deliveryFee) {
     const totalPrice = price + deliveryFee;
     return `Shipping to ${country} will cost ${totalPrice} credits`;
 }
 
-// Приклад виклику функції:
-console.log(getShippingMessage('Ukraine', 100, 20));
-console.log(getShippingMessage('USA', 150, 30));
-    </pre> 
+function makeTransaction(quantity, pricePerDroid, customerCredits) {
+    const totalPrice = quantity * pricePerDroid;
+
+    if (totalPrice > customerCredits) {
+        return "Insufficient funds!";
+    } else {
+        return `You ordered ${quantity} droids worth ${totalPrice} credits!`;
+    }
+}
+ 
+</script>
+
 </body>
 </html>
