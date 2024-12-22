@@ -3,11 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Array Tasks</title>
+    <title>Array Tasks and Text Editor</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- Text Editor Interface -->
+    <div class="editor-container">
+        <div class="toolbar">
+            <button onclick="formatText('bold')" title="Bold"><strong>B</strong></button>
+            <button onclick="formatText('italic')" title="Italic"><em>I</em></button>
+            <button onclick="formatText('underline')" title="Underline"><u>U</u></button>
+            <input type="color" class="color-picker" onchange="changeColor(this.value)" title="Text Color">
+            <button onclick="changeCase('upper')" title="UPPERCASE">AA</button>
+            <button onclick="changeCase('lower')" title="lowercase">aa</button>
+        </div>
+        <div id="editor" contenteditable="true">Enter your text here...</div>
+    </div>
 
-<script> 
+<script>
+// Your existing functions
 function getShippingMessage(country, price, deliveryFee) {
     const totalPrice = price + deliveryFee;
     return `Shipping to ${country} will cost ${totalPrice} credits`;
@@ -33,7 +47,6 @@ function makeArray(firstArray, secondArray, maxLength) {
     }
 }
 
-// Task 1: Create array C based on arrays A and B
 function createArrayC(arrayA, arrayB) {
     const arrayC = [];
     
@@ -45,7 +58,6 @@ function createArrayC(arrayA, arrayB) {
         }
     }
     
-    // Find max element and its index
     let maxIndex = 0;
     for (let i = 1; i < arrayC.length; i++) {
         if (arrayC[i] > arrayC[maxIndex]) {
@@ -53,7 +65,6 @@ function createArrayC(arrayA, arrayB) {
         }
     }
     
-    // Swap max element with first element
     if (maxIndex !== 0) {
         const temp = arrayC[0];
         arrayC[0] = arrayC[maxIndex];
@@ -63,7 +74,6 @@ function createArrayC(arrayA, arrayB) {
     return arrayC;
 }
 
-// Task 2: Bubble sort implementation
 function bubbleSort(arr) {
     const n = arr.length;
     let sorted = false;
@@ -72,7 +82,6 @@ function bubbleSort(arr) {
         sorted = true;
         for (let i = 0; i < n - 1; i++) {
             if (arr[i] > arr[i + 1]) {
-                // Swap elements
                 const temp = arr[i];
                 arr[i] = arr[i + 1];
                 arr[i + 1] = temp;
@@ -83,9 +92,7 @@ function bubbleSort(arr) {
     return arr;
 }
 
-// Test functions
 function testArrayTasks() {
-    // Test data
     const arrayA = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
     const arrayB = [2, 4, 3, 2, 5, 6, 7, 8, 9, 1];
     
@@ -93,20 +100,61 @@ function testArrayTasks() {
     console.log("Array A:", arrayA);
     console.log("Array B:", arrayB);
     
-    // Task 1
     const arrayC = createArrayC(arrayA, arrayB);
     console.log("\nArray C (after creation and max element swap):");
     console.log(arrayC);
     
-    // Task 2
-    const arrayToSort = [...arrayC]; // Create a copy for sorting
+    const arrayToSort = [...arrayC];
     console.log("\nBubble Sort:");
     console.log("Before sorting:", arrayToSort);
     const sortedArray = bubbleSort(arrayToSort);
     console.log("After sorting:", sortedArray);
 }
 
-// Run tests when the page loads
+// Enhanced Text Editor Functions with Console Logging
+function logEditorAction(action, details = '') {
+    const editorContent = document.getElementById('editor').innerHTML;
+    console.log(`Text Editor Action: ${action}`);
+    console.log(`Details: ${details}`);
+    console.log('Current Editor Content:', editorContent);
+    console.log('----------------------------------------');
+}
+
+function formatText(command) {
+    document.execCommand(command, false, null);
+    logEditorAction(command);
+    document.getElementById('editor').focus();
+}
+
+function changeColor(color) {
+    document.execCommand('foreColor', false, color);
+    logEditorAction('color change', `New color: ${color}`);
+    document.getElementById('editor').focus();
+}
+
+function changeCase(type) {
+    const editor = document.getElementById('editor');
+    const selection = window.getSelection();
+    const range = selection.getRangeAt(0);
+    const selectedText = range.toString();
+
+    if (selectedText) {
+        const newText = document.createTextNode(
+            type === 'upper' ? selectedText.toUpperCase() : selectedText.toLowerCase()
+        );
+        range.deleteContents();
+        range.insertNode(newText);
+        logEditorAction('case change', `Type: ${type}, Text: ${selectedText} -> ${newText.textContent}`);
+    }
+    editor.focus();
+}
+
+// Monitor editor content changes
+document.getElementById('editor').addEventListener('input', function(e) {
+    logEditorAction('content change', 'User input/modification');
+});
+
+// Run array tests when the page loads
 window.onload = testArrayTasks;
 </script>
 
