@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Звіт Завдання №1</title>
+</head>
+<body>
+    <h1>Звіт Завдання №1</h1>
+    <h2>Код функції</h2>
+    <pre>
+function getShippingMessage(country, price, deliveryFee) {
+    const totalPrice = price + deliveryFee;
+    return `Shipping to ${country} will cost ${totalPrice} credits`;
+}
+
+// Приклад виклику функції:
+console.log(getShippingMessage('Ukraine', 100, 20));
+console.log(getShippingMessage('USA', 150, 30));
+    </pre> 
+</body>
+</html>
