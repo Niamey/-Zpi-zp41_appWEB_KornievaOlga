@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shipping, Droid Sales and Array Maker</title>
+    <title>Array Tasks</title>
 </head>
 <body>
 
-<script>
+<script> 
 function getShippingMessage(country, price, deliveryFee) {
     const totalPrice = price + deliveryFee;
     return `Shipping to ${country} will cost ${totalPrice} credits`;
@@ -31,7 +31,83 @@ function makeArray(firstArray, secondArray, maxLength) {
     } else {
         return newArray;
     }
-} 
+}
+
+// Task 1: Create array C based on arrays A and B
+function createArrayC(arrayA, arrayB) {
+    const arrayC = [];
+    
+    for (let i = 0; i < arrayA.length; i++) {
+        if (arrayA[i] === arrayB[i]) {
+            arrayC[i] = 1;
+        } else {
+            arrayC[i] = 1 / (arrayA[i] - arrayB[i]);
+        }
+    }
+    
+    // Find max element and its index
+    let maxIndex = 0;
+    for (let i = 1; i < arrayC.length; i++) {
+        if (arrayC[i] > arrayC[maxIndex]) {
+            maxIndex = i;
+        }
+    }
+    
+    // Swap max element with first element
+    if (maxIndex !== 0) {
+        const temp = arrayC[0];
+        arrayC[0] = arrayC[maxIndex];
+        arrayC[maxIndex] = temp;
+    }
+    
+    return arrayC;
+}
+
+// Task 2: Bubble sort implementation
+function bubbleSort(arr) {
+    const n = arr.length;
+    let sorted = false;
+    
+    while (!sorted) {
+        sorted = true;
+        for (let i = 0; i < n - 1; i++) {
+            if (arr[i] > arr[i + 1]) {
+                // Swap elements
+                const temp = arr[i];
+                arr[i] = arr[i + 1];
+                arr[i + 1] = temp;
+                sorted = false;
+            }
+        }
+    }
+    return arr;
+}
+
+// Test functions
+function testArrayTasks() {
+    // Test data
+    const arrayA = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    const arrayB = [2, 4, 3, 2, 5, 6, 7, 8, 9, 1];
+    
+    console.log("Initial arrays:");
+    console.log("Array A:", arrayA);
+    console.log("Array B:", arrayB);
+    
+    // Task 1
+    const arrayC = createArrayC(arrayA, arrayB);
+    console.log("\nArray C (after creation and max element swap):");
+    console.log(arrayC);
+    
+    // Task 2
+    const arrayToSort = [...arrayC]; // Create a copy for sorting
+    console.log("\nBubble Sort:");
+    console.log("Before sorting:", arrayToSort);
+    const sortedArray = bubbleSort(arrayToSort);
+    console.log("After sorting:", sortedArray);
+}
+
+// Run tests when the page loads
+window.onload = testArrayTasks;
 </script>
 
 </body>
